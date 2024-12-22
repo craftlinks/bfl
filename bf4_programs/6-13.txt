@@ -12,4 +12,3 @@ rrlmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l
 orlmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorormlll<mllmlmllllml
 lllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomloroolmmml<mllmmllllml
 rllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorrlmlllomllmllmmlllo
-[INFO] Cycle detected with size: 6, after 13 program executions

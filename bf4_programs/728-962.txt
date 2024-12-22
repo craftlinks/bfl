@@ -1,4 +1,3 @@
-[INFO] experiments: 7900000
 }r{}>rpo<r>mll|po}m><<mooroo}rrll}|>{<>}op{o}lm}}prlmplm|oo>rr>r{m{po|{o<l{lro>{l{<|o<|m}|<|ppm<|orpp}lr{<r>{>m{mrrm>pmp<o>rp<o}<ror}orr}o<r>l{>r}r>olo{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrm><
 ro}p{rrl|p>p|<{{}mmmm><<>{}||||}l}|>{<>}op{o}lm}}prlmplm|oo>rr>r{m{po|{o<l{lro>{l{<|o<|m}|<|ppm<|orpp}lr{<r>{>m{mrrm>pmp<o>rp<o}<ror}orr}o<r>l{>r}r>olo{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrm><
 oo<ro|pmrpmpm{{{}}}|}}||pmm||||}l}|>{<>}op{o}lm}}prlmplm|oo>rr>r{m{po|{o<l{lro>{l{<|o<|m}|<|ppm<|orpp}lr{<r>{>m{mrrm>pmp<o>rp<o}<ror}orr}o<r>l{>r}r>olo{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrm>r
@@ -962,4 +961,3 @@ lolrlro<lro<|||mmmlr}||||l<}o}r}l}|>{<>}op{o}lm}}prlmplm|oo>rr>r{m{po|{o<l{lro>{
 {>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>llll>>l>}}rrlrr}>>rr{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrll>
 {>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{>>{>>{{{>>{r}>>rr{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrll>
 {>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>lllll|llorlrr{>>{r{r}>m|}<m{{prpmlol<r>>>}<pp|lpp<m>|mlrlm|}|}o||>|p<rlpp>}}m{o|pll>ml<||l<>{{mo|>lr>mmo<<}lp}p{}}|<}lrrll>
-[INFO] Cycle detected with size: 728, after 962 program executions

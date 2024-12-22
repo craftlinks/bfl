@@ -62,6 +62,24 @@ const char *ins_bf1[COUNT] = {
     [INS_JMP_RIGHT] = "r",
 };
 
+typedef enum {
+    BFL1,
+    BFL2,
+    BFL3,
+    BFL4,
+    BFL5,
+    
+    BFL_COUNT
+} BFL;
+
+const char *_bfl[BFL_COUNT] = {
+    [BFL1] = "bf1",
+    [BFL2] = "bf2",
+    [BFL3] = "bf3",
+    [BFL4] = "bf4",
+    [BFL5] = "bf5",
+};
+
 Program *generate_random_program(Programs *programs) {
     Program program = {0};
     program.ex_number = 0;
@@ -617,12 +635,116 @@ Program *evaluate_bf5(Programs *programs, Program *source) {
 #define MAX_EX_NUMBER 100000
 #define DO_SEARCH 100000000
 
-int main() {
+bool write_programs_to_file(Programs *programs, size_t ex_number, size_t cycle_number, BFL bfl) {
+    char dir_path[100];
+        snprintf(dir_path, sizeof(dir_path), "./%s_programs", _bfl[bfl]);
+        if (!nob_mkdir_if_not_exists(dir_path)) {
+            nob_log(NOB_ERROR, "Could not create directory %s", dir_path);
+            return false;
+        }
+    
+    char file_path[100];
+    FILE *file = NULL;
+    int discriminator = 0;
+    
+    do {
+        if (discriminator == 0) {
+            snprintf(file_path, sizeof(file_path), "%s/%zu-%zu.txt", 
+                    dir_path, cycle_number, ex_number);
+        } else {
+            snprintf(file_path, sizeof(file_path), "%s/%zu-%zu_%d.txt", 
+                    dir_path, cycle_number, ex_number, discriminator);
+        }
+        
+        // Try to open file in read mode to check if it exists
+        FILE *test = fopen(file_path, "r");
+        if (test == NULL) {
+            // File doesn't exist, we can use this name
+            file = fopen(file_path, "w");
+            break;
+        }
+        fclose(test);
+        discriminator++;
+    } while (discriminator < 1000); // Reasonable upper limit to prevent infinite loops
+
+    if (file == NULL) {
+        nob_log(NOB_ERROR, "Could not create unique file name or open file %s", file_path);
+        return false;
+    }
+    for (size_t i = 0; i < programs->count; ++i) {
+        Program *program = &programs->items[i];       
+        for (int j = 0; j < MAX_TAPE_SIZE; j++) {
+            unsigned char instruction = program->tape[j] % COUNT;
+            fprintf(file, "%s", ins_bf1[instruction]);
+        }
+        fprintf(file, "\n");
+    }
+    fclose(file);
+    return true;
+}
+
+bool flag_int(int *argc, char ***argv, size_t *value)
+{
+    const char *flag = nob_shift(*argv, *argc);
+    if ((*argc) <= 0) {
+        nob_log(NOB_ERROR, "No argument is provided for %s", flag);
+        return false;
+    }
+    *value = (size_t)atoi(nob_shift(*argv, *argc));
+    return true;
+}
+
+int main(int argc, char **argv) {
+    
+    const char *program_name = nob_shift(argv, argc);
+    
     srand(time(NULL));
     size_t do_search = DO_SEARCH;
     size_t cycle_number = 0;
     size_t highest_cycle_number = 0;
     size_t highest_execution_number = 50;
+    size_t bfl = 5;
+    Program* (*evaluate)(Programs *, Program *) = evaluate_bf5;
+    
+    while (argc > 0) {
+        const char *flag = argv[0];
+        if (strcmp(flag, "-e") == 0) {
+            if (!flag_int(&argc, &argv, &do_search)) return 1;
+        }
+        else if (strcmp(flag, "-hc") == 0) {
+            if (!flag_int(&argc, &argv, &highest_cycle_number)) return 1;
+        }
+        else if (strcmp(flag, "-he") == 0) {
+            if (!flag_int(&argc, &argv, &highest_execution_number)) return 1;
+        }
+        else if (strcmp(flag, "-bfl") == 0) {
+            if (!flag_int(&argc, &argv, &bfl)) return 1;
+        } else {
+            break;
+        }
+    }
+    
+    switch (bfl - 1) {
+        case BFL1:
+            evaluate = evaluate_bf1;
+            break;
+        case BFL2:
+            evaluate = evaluate_bf2;
+            break;
+        case BFL3:
+            evaluate = evaluate_bf3;
+            break;
+        case BFL4:
+            evaluate = evaluate_bf4;
+            break;
+        case BFL5:
+            evaluate = evaluate_bf5;
+            break;
+        default:
+            nob_log(NOB_ERROR, "invalid bfl variant selection");
+            return 1;
+    }
+        
     while (do_search) {
         
         if( do_search % 100000 == 0){
@@ -636,7 +758,7 @@ int main() {
         Program *p0 = generate_random_program(&programs);
         
         while (ex_number < MAX_EX_NUMBER) { 
-            p0 = evaluate_bf5(&programs, p0);
+            p0 = evaluate(&programs, p0);
             cycle_number = add_to_hash(&ht, p0);
             if(cycle_number) break;
             ++ex_number;
@@ -645,12 +767,14 @@ int main() {
         if (cycle_number > highest_cycle_number) {
             qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
             print_programs(programs);
+            write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
             nob_log(NOB_INFO,"Cycle detected with size: %zu, after %zu program executions", cycle_number, programs.items[programs.count-1].ex_number);
             highest_cycle_number = cycle_number;
         }
         else if (ex_number>= highest_execution_number) {
             qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
             print_programs(programs);
+            write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
             nob_log(NOB_INFO,"%zu unique program executions, cycle_size: %zu", ex_number, cycle_number);
             highest_execution_number = ex_number;
         }

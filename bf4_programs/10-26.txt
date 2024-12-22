@@ -25,4 +25,3 @@ llmllllmmlmmmmmmmmmmllmr<l<>mmrr}rmrppp{pp<|p{l}lor}o}<>rp>}|o|<>>olop{p}|{oo}ml
 llllmmllllmmmmmmmmmmllmr<l<>mmrr}rmrppp{pp<|p{l}lor}o}<>rp>}|o|<>>olop{p}|{oo}ml}p}m>lr>p{l{}{}p|pp|{o{r|lomrrrrroorlrolllmllmlm
 mllllmmmmlmmmmmmmmmmllmr<l<>mmrr}rmrppp{pp<|p{l}lor}o}<>rp>}|o|<>>olop{p}|{oo}ml}p}m>lr>p{l{}{}p|pp|{o{r|lomrrrrrroormlollllrrll
 lllllmmmmlmmmmmmmmmmllmr<l<>mmrr}rmrppp{pp<|p{l}lor}o}<>rp>}|o|<>>olop{p}|{oo}ml}p}m>lr>p{l{}{}p|pp|{o{r|lomrrrrrllrrmmmmllmlmll
-[INFO] Cycle detected with size: 10, after 26 program executions

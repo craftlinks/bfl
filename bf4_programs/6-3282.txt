@@ -3282,4 +3282,3 @@ ollooooooooo>o>>oo>>>ooo>>>ooo>ooooo>ooooooo>ooo>oo>oo>oooooooo>oooo>oooooooo>o>
 ollooooooooo>oo>oooo>ooooo>ooo>ooooo>ooooooo>ooo>o>>oo>oooooooo>ooo>>oooooooo>o>oo>o>o{ooooooooooooo>ooooooo{>>o>ooo>oooo{{oooooo>>ooooooo{{<o<<oo{>>>{o{>o{oo>><{{}{moorro|r}l}p>pm{oor>{<|>r|{mmr>m<}lo|{><>lr}}lrplrl{>pl><{<<{{o}llm|><lprro|l<<lo<>|ollrllo
 ollooooooooo>o>>oooo>ooooo>ooo>ooooo>oooooo>>ooo>oo>oo>oooooooo>oooo>oooooooo>o>oo>o>o{ooooooooooooo>ooooo>>{o>o>ooo>oooo{{oooooo>oooooooo{{<<o{o>><oo>{{>o{oo>><{{}{moorro|r}l}p>pm{oor>{<|>r|{mmr>m<}lo|{><>lr}}lrplrl{>pl><{<<{{o}llm|><lprro|l<<lo<>|ollrllo
 ollooooooooo>oo>ooo>>oooo>>ooo>ooooo>ooooooo>ooo>oo>oo>oooooooo>oooo>oooooooo>o>oo>o>o{ooooooooooooo>ooooo>o{>>o>ooo>oooo{{oooooo>oooooooo{{<<o<ooo{>>>{{>o{oo>><{{}{moorro|r}l}p>pm{oor>{<|>r|{mmr>m<}lo|{><>lr}}lrplrl{>pl><{<<{{o}llm|><lprro|l<<lo<>|ollrllo
-[INFO] 3282 unique program executions, cycle_size: 8
