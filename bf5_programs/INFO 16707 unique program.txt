@@ -1,0 +1,11 @@
+[INFO] 16707 unique program executions, cycle_size: 1
+wuuut!!
+wait. this happened more than once.... how can I get the exact same when programs are supposed to be random?? 
+r}rr}}r}}<}<rr}rrrro}rr}ro}ro}rrrrooo}rrr<<<<}}<<<}<<r<}r}ro}<<<rrrr}ro}o}<<}}<<}rrrr}rrr}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<or}or}or}or}or}or}or}or}oror}or}oor}or}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<}orr<r}oorr<<}<<<
+r}rr}}r}}<}<rr}rrrro}rr}ro}ro}rrrrooo}rrr<<<<}}<<<}<<r<}r}ro}<<<rrrr}ro}o}<<}}<<}rrrr}rrr}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<or}or}or}or}or}or}or}or}oror}or}oor}or}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<}orr<r}oorr<<}<<<
+This is the final repeat.
+The program sequence is to large to be contained in the terminal buffer.
+So next up is definitely writing to file...
+Then we want to visualize these programs. each instruction is a color. simple png output should be fine.
+yes, it appears to be the same. that can only mean, I think that my random function is not random enough...
+r}rr}}r}}<}<rr}rrrro}rr}ro}ro}rrrrooo}rrr<<<<}}<<<}<<r<}r}ro}<<<rrrr}ro}o}<<}}<<}rrrr}rrr}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<or}or}or}or}or}or}or}or}oror}or}oor}or}or}or}oror}or}or}or}or}or}or}orrror}or}or}or}or}or}o<<<}orr<r}oorr<<}<<<

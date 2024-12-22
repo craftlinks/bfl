@@ -1,0 +1,18 @@
+p|lop{{rpr<m{<|<o{}ro<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oppr|r>|lo
+lrrooroo<rr>><r<o{}ro<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oppr|r>|lo
+lrro<<>}{}}}}}pmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oppr|r>|lo
+{}}||}||m}}mmppmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oppr|r>|lr
+|llmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oppr|r>ppp
+lmmllllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}opmrmrrlrl
+mmlmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oollrrlrll
+lllmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rrmrrlrlll
+lmmllllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rrormrrlrl
+mmmllllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rollrrlrll
+llmllllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rllrrlrllm
+lmmmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rlollrrlrl
+llmmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}olmrrlrllm
+mmpmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}oolmrrlrll
+mllmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}ormmrrlrll
+mmlmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}orrmrrlrll
+lllmlllmmmmpmmmmpp}mo<{ll|m>r}plomlpo{mp}o{l{<<{}|{}ml}m{>o|pl{p|{}lm}p{}>{o{}{m>l}<mlo>oomr<>mlp}p{l{l}|>}ollm>l{{m}}rrmrrlrlll
+[INFO] Cycle detected with size: 9, after 16 program executions

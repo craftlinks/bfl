@@ -1,0 +1,15 @@
+r}p>p>p}l}lmm<}{r}{{}r>>>}r>r|rlrp>mol<o}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|om}
+|}>>>>{>>>>>{<>}}>}}{{>>>}{>}>{lrp>mol<o}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|om}
+|}}}}|||}}}}}}}|}}|}}p>|||}||}|}}}||o|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|om}
+p}}p>|||p}|pp|pp|p|}}<||{>|||}|}}}||o|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|om}
+m|}|ppppppppmppl|mpplpp|mppplm|mpr||o|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|om}
+ppmmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<o}>|r}moopo|pr|omp
+lllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlor<llmlllrmllmmmmmmmp
+rllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorrlmlllomllmllmmlllo
+ollmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorolmlll<mllmlmllllml
+lrlmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlororlmmmlomllmllmllll
+rrlmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorrrmlllomllmllmmlllo
+orlmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorormlll<mllmlmllllml
+lllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomloroolmmml<mllmmllllml
+rllmmmmmmmmmpmmmmmlpmllmllmlmmmlmrlrl|}>}om>{>|>lop>oom}|pl}<l}>plrpm<l<{p|po><l{r{|<orppr>orl}|m}{pm>roomlorrlmlllomllmllmmlllo
+[INFO] Cycle detected with size: 6, after 13 program executions
