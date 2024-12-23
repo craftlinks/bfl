@@ -124,10 +124,14 @@ typedef struct {
 
 #define hash_init(ht, cap) \
     do { \
-        (ht)->items = malloc(sizeof(*(ht)->items)*cap); \
-        memset((ht)->items, 0, sizeof(*(ht)->items)*cap); \
-        (ht)->capacity = (cap); \
-        (ht)->count = 0; \
+            (ht)->items = malloc(sizeof(*(ht)->items)*(cap)); \
+            if ((ht)->items) { \
+                memset((ht)->items, 0, sizeof((*(ht)->items))*(cap)); \
+                (ht)->capacity = (cap); \
+                (ht)->count = 0; \
+            } else { \
+                nob_log(NOB_ERROR, "Failed to allocate new hash table!"); \
+            } \
     } while(0)
     
 uint64_t hash(u8 *buf, size_t buf_size) {
@@ -166,6 +170,7 @@ size_t add_to_hash(PKVs *ht, Program *program) {
     } else {
         ht->items[h].occupied = true;
         ht->items[h].program =  program;
+        ht->count++;
     }
     return 0;
 }
@@ -752,7 +757,7 @@ int main(int argc, char **argv) {
         }
         Programs programs = {0};
         PKVs ht = {0};
-        hash_init(&ht, 50000);
+        hash_init(&ht, 100000);
         size_t ex_number = 0;
         
         Program *p0 = generate_random_program(&programs);
@@ -780,6 +785,7 @@ int main(int argc, char **argv) {
         }
         nob_da_free(programs);
         nob_da_free(ht);
+        
         --do_search;
     }
 }
