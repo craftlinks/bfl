@@ -757,7 +757,7 @@ int main(int argc, char **argv) {
         }
         Programs programs = {0};
         PKVs ht = {0};
-        hash_init(&ht, 100000);
+        hash_init(&ht, 200000);
         size_t ex_number = 0;
         
         Program *p0 = generate_random_program(&programs);
