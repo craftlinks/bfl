@@ -25,6 +25,7 @@ typedef struct {
 } RGBA32;
 
 Color colors[11] = {
+    {128, 128, 128},
     {255, 0, 0},    // Red
     {0, 0, 255},    // Blue
     {0, 180, 0},    // Green
@@ -33,8 +34,7 @@ Color colors[11] = {
     {0, 206, 209},  // Turquoise
     {255, 105, 180},// Pink
     {139, 69, 19},  // Brown
-    {255, 215, 0},  // Yellow
-    {128, 128, 128}, // Gray
+    {255, 215, 0},  // Yellow // Gray
     {0, 0 ,0}       // Black
 };
 
