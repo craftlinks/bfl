@@ -5,12 +5,15 @@
 #include <assert.h>
 #define NOB_IMPLEMENTATION
 #include "nob.h"
-
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 #define MIN_PROGRAM_SIZE 64
 #define MAX_TAPE_SIZE 256
 #define MAX_INST_COUNT 12800
 #define u8 uint8_t
 #define u64 uint64_t
+
+
 
 /*
 Programs dynamic array
@@ -698,6 +701,8 @@ bool flag_int(int *argc, char ***argv, size_t *value)
     *value = (size_t)atoi(nob_shift(*argv, *argc));
     return true;
 }
+
+
 
 int main(int argc, char **argv) {
     
