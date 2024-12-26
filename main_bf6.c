@@ -40,7 +40,7 @@ typedef enum {
 
 static_assert(COUNT == 11, "Amount of instructions have changed");
 
-const char *ins_bf7[COUNT] = {
+const char *ins_bf6[COUNT] = {
     [O]   = "o",
     [MRL] = "<",
     [MRR] = ">",
@@ -61,7 +61,6 @@ typedef enum {
     BFL4,
     BFL5,
     BFL6,
-    BFL7,
     
     BFL_COUNT
 } BFL;
@@ -73,7 +72,6 @@ const char *_bfl_str[BFL_COUNT] = {
     [BFL4] = "bf4",
     [BFL5] = "bf5",
     [BFL6] = "bf6",
-    [BFL7] = "bf7",
 };
 
 Program *generate_random_program(Programs *programs) {
@@ -92,7 +90,7 @@ void print_program(Program *program) {
     
     for (int i = 0; i < MAX_TAPE_SIZE; i++) {
         unsigned char instruction = program->tape[i] % COUNT;
-        printf("%s", ins_bf7[instruction]);
+        printf("%s", ins_bf6[instruction]);
     }
     printf("\n");
 }
@@ -189,7 +187,7 @@ size_t add_to_hash(PKVs *ht,Programs *programs, size_t program_index) {
     return 0;
 }
 
-#define MAX_EX_NUMBER 50000
+#define MAX_EX_NUMBER 1000000
 #define DO_SEARCH 100000000
 
 bool write_programs_to_file(Programs *programs, size_t ex_number, size_t cycle_number, BFL bf6) {
@@ -232,7 +230,7 @@ bool write_programs_to_file(Programs *programs, size_t ex_number, size_t cycle_n
         Program *program = &programs->items[i];
         for (int j = 0; j < MAX_TAPE_SIZE; j++) {
             unsigned char instruction = program->tape[j] % COUNT;
-            fprintf(file, "%s", ins_bf7[instruction]);
+            fprintf(file, "%s", ins_bf6[instruction]);
         }
         fprintf(file, "\n");
     }
@@ -251,17 +249,13 @@ bool flag_int(int *argc, char ***argv, size_t *value)
     return true;
 }
 
-Program *evaluate_bf7(Programs *programs, Program *source) {
+Program *evaluate_bf6(Programs *programs, Program *source) {
     if (source == NULL) {
         return NULL;
     }
     size_t read_head = 0;   // Head for reading from source tape
     size_t write_head = 0;  // Head for writing to result tape
     size_t ins_head = 0;    // Instruction pointer for source program
-    int readh_d = 1;
-    int writeh_d = 1;
-    int insh_d = 1;
-    int write = 0;
     
     size_t ins_count = 0;
     
@@ -273,66 +267,94 @@ Program *evaluate_bf7(Programs *programs, Program *source) {
         BF6 instruction = result.tape[ins_head];
         if (instruction >= COUNT ){
             nob_log(NOB_ERROR, "IMPOSSIBLE INSTRUCTION %d at %d", instruction, ins_head);
+            nob_log(NOB_ERROR, "%d%d%d", result.tape[ins_head-1],result.tape[ins_head],result.tape[ins_head+1] );
+            nob_log(NOB_ERROR, "%d%d%d", source->tape[ins_head-1],source->tape[ins_head],source->tape[ins_head+1] );
+            print_program_u8(source);
+            print_program_u8(&result);
             exit(1);
         }
+
         switch (instruction) {
             case O:{
+                ins_head = (ins_head + 1);
                 break;
             }                            
             case MRL:{
-                readh_d = -1;
+                read_head = (read_head + MAX_TAPE_SIZE - 1) % MAX_TAPE_SIZE;    
+                ins_head = (ins_head + 1);
                 break;
             }
             case MRR: {
-                readh_d = 1;
+                read_head = (read_head + 1) % MAX_TAPE_SIZE;    
+                ins_head = (ins_head + 1);
                 break;
             }                                
             case MWL:{
-                writeh_d = -1;
+                write_head = (write_head + MAX_TAPE_SIZE - 1) % MAX_TAPE_SIZE;
+                ins_head = (ins_head + 1);
                 break;
             }                               
             case MWR:{
-                writeh_d = 1;
+                write_head = (write_head + 1) % MAX_TAPE_SIZE;
+                ins_head = (ins_head + 1);
                 break; 
             }                             
             case MIL:{
-                insh_d = -1;
+                if (result.tape[read_head] != 0) {
+                    int bracket_count = 1;
+                    while (bracket_count > 0 && ins_head < MAX_TAPE_SIZE && ins_head > 0) {
+                        ins_head--;
+                        if (result.tape[ins_head] == MIL) bracket_count++;
+                        if (result.tape[ins_head] == MIR) bracket_count--;
+                    }
+                } else {
+                    ins_head = (ins_head + 1);
+                }
                 break;
             }
             case MIR:{
-                insh_d = 1;
+                if (result.tape[read_head] == 0) {
+                    int bracket_count = 1;
+                    while (bracket_count > 0 && ins_head < MAX_TAPE_SIZE && ins_head > 0) {
+                        ins_head++;
+                        if (result.tape[ins_head] == MIR) bracket_count++;
+                        if (result.tape[ins_head] == MIL) bracket_count--;
+                    }
+                } else {
+                    ins_head = (ins_head + 1);
+                }
                 break;
             }
             case S:{
                 size_t temp = read_head;
                 read_head = write_head;
                 write_head = temp;
+                ins_head = (ins_head + 1);
                 break;
             }            
             case WP:{
-                write = 1;
+                result.tape[write_head] = (result.tape[read_head] + 1) % COUNT;
+                ins_head = (ins_head + 1);
                 break; 
             }  
             case WE: {
-                write = 0;
+                result.tape[write_head] = result.tape[read_head];
+                ins_head = (ins_head + 1);
                 break;
             }                
             case WM:{
-                write = -1;
+                result.tape[write_head] = (result.tape[read_head] + COUNT - 1) % COUNT;
+                ins_head = (ins_head + 1);
                 break; 
             }           
             default:{
+                ins_head = (ins_head + 1);
                 nob_log(NOB_INFO, "WARNING: skipping unkown instruction: %s!", instruction);
                 break;
             }            
         }
-        read_head = (read_head + readh_d + MAX_TAPE_SIZE) % MAX_TAPE_SIZE;
-        write_head = (write_head + writeh_d + MAX_TAPE_SIZE) % MAX_TAPE_SIZE;
-        result.tape[write_head] = (source->tape[read_head] + write + COUNT) % COUNT;
-        ins_head = ins_head + insh_d;
-        
         ins_count++;
-        if(ins_head > MAX_TAPE_SIZE || ins_head < 0) break;
+        if(ins_head > MAX_TAPE_SIZE) break;
     }
     nob_da_append(programs, result);
     return &programs->items[programs->count-1];
@@ -349,8 +371,8 @@ int main(int argc, char **argv) {
     size_t cycle_number = 0;
     size_t highest_cycle_number = 0;
     size_t highest_execution_number = 1;
-    size_t bfl = 7;
-    Program* (*evaluate)(Programs *, Program *) = evaluate_bf7;
+    size_t bfl = 6;
+    Program* (*evaluate)(Programs *, Program *) = evaluate_bf6;
     
     while (argc > 0) {
         const char *flag = argv[0];
@@ -385,19 +407,19 @@ int main(int argc, char **argv) {
 
         }
         
-        if (cycle_number > highest_cycle_number) {
-            qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
-            // print_programs(programs);
-            write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
-            nob_log(NOB_INFO,"Cycle detected with size: %zu, after %zu program executions", cycle_number, programs.items[programs.count-1].ex_number);
-            highest_cycle_number = cycle_number;
-        }
-        if (ex_number > highest_execution_number) {
-            qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
-            // print_programs(programs);
-            write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
-            nob_log(NOB_INFO,"%zu unique program executions, cycle_size: %zu", ex_number, cycle_number);
-            highest_execution_number = ex_number;
+        // if (cycle_number > highest_cycle_number) {
+        //     qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
+        //     print_programs(programs);
+        //     write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
+        //     nob_log(NOB_INFO,"Cycle detected with size: %zu, after %zu program executions", cycle_number, programs.items[programs.count-1].ex_number);
+        //     highest_cycle_number = cycle_number;
+        // }
+        if (ex_number == MAX_EX_NUMBER) {
+                qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
+                // print_programs(programs);
+                write_programs_to_file(&programs, ex_number, cycle_number, bfl-1);
+                nob_log(NOB_INFO,"%zu unique program executions, cycle_size: %zu", ex_number, cycle_number);
+                highest_execution_number = ex_number;
         }
         nob_da_free(programs);
         nob_da_free(ht);

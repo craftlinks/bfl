@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <string.h>
-#include <sys/stat.h>
 
 #define NOB_IMPLEMENTATION
 #include "nob.h"
@@ -26,7 +25,7 @@ typedef struct {
 } RGBA32;
 
 Color colors[11] = {
-    {0, 0, 0},
+    {128, 128, 128},
     {255, 0, 0},    // Red
     {0, 0, 255},    // Blue
     {0, 180, 0},    // Green
@@ -35,8 +34,8 @@ Color colors[11] = {
     {0, 206, 209},  // Turquoise
     {255, 105, 180},// Pink
     {139, 69, 19},  // Brown
-    {255, 215, 0},  // Yellow
-    {255, 255 ,255}  
+    {255, 215, 0},  // Yellow // Gray
+    {0, 0 ,0}       // Black
 };
 
 typedef struct {
@@ -57,72 +56,50 @@ Color instruction_to_color(char i) {
             return colors[3];
         case '}':
             return colors[4];
-        case 'l':
+        case '|':
             return colors[5];
-        case 'r':
-            return colors[6];
-        case 's':
-            return colors[7];
         case 'p':
-            return colors[8];
-        case 'w':
-            return colors[9];
+            return colors[6];
         case 'm':
-            return colors[10];
+            return colors[7];
+        case 'l':
+            return colors[8];
+        case 'r':
+            return colors[9];
         default:
-            nob_log(NOB_ERROR, "UNKNOWN INSTRUCTION");
-            exit(1);
+            return colors[10];
     }  
 }
 
 bool image_from_file(const char *file) {
-    size_t len = strlen(file);
-    char *im_file;
-    if (len > 4 && strcmp(file + len - 4, ".txt") == 0) {
-        im_file = malloc(len + 1);
-        strcpy(im_file, file);
-        strcpy(&im_file[len-4], ".png");
-    } else {
-        im_file = malloc(len + 5);
-        strcpy(im_file, file);
-        strcpy(&im_file[len], ".png");
-    }
-
-    struct stat buffer;
-    if (stat(im_file, &buffer) == 0) {
-        nob_log(NOB_INFO, "PNG file %s already exists, skipping", im_file);
-        free(im_file);
-        return true;
-    }
-
-    NSB buf = {0};
+    NSB buf = {0}; // Owns the memory
     if (!nob_read_entire_file(file, &buf)) return 1;
-    nob_log(NOB_INFO, "Size of %s is %zu bytes", file, buf.count);
-
+    nob_log(NOB_INFO, "Size of %s is %zu bytes", file, buf.count); // 
+    
     NSV content = {
         .data = buf.items,
         .count = buf.count
-    };
-
+    }; // Borrows the memory
+    
     Programs programs = {0};
     size_t count = 0;
     for (; content.count > 0; ++count) {
         content = nob_sv_trim_left(content);
         content = nob_sv_trim_right(content);
-
+        
         NSV program = nob_sv_chop_by_delim(&content, '\n');
         if (program.count != 256) {
             nob_log(NOB_INFO, "unexpected program size %zu, for program at line %zu", program.count, count);
             return true;
         } 
-
+        
         nob_da_append(&programs, program);   
     }
     size_t p_size = programs.items[0].count;
     RGBA32 *pixels = malloc(programs.count * p_size * sizeof(RGBA32));
-
+    
     nob_log(NOB_INFO, "writing image to pixels (h: %zu, w: %zu)", programs.count, p_size);
-
+    
     for (size_t p = 0; p < (size_t)programs.count; ++p) {
         if (programs.items[p].count != p_size) {
                 nob_log(NOB_ERROR, "Inconsistent program sizes: %zu != %zu", programs.items[p].count, p_size);
@@ -137,9 +114,20 @@ bool image_from_file(const char *file) {
             pixels[index].a = 255;
         }
     }
-
+    size_t len = strlen(file);
+    char *im_file;
+    if (len > 4 && strcmp(file + len - 4, ".txt") == 0) {
+        im_file = malloc(len + 1); // +1 for null terminator
+        strcpy(im_file, file);
+        strcpy(&im_file[len-4], ".png");
+    } else {
+        im_file = malloc(len + 5);
+        strcpy(im_file, file);
+        strcpy(&im_file[len-4], ".png"); 
+    }
+    
     if(!stbi_write_png(im_file, p_size, programs.count, 4, pixels, p_size*sizeof(RGBA32))) return false;
-
+    
     nob_log(NOB_INFO, "found %zu programs", programs.count);
     nob_log(NOB_INFO, "generated image file for %s", file);
     free(pixels);
