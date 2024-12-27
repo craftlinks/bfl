@@ -211,24 +211,18 @@ size_t add_to_hash(PKVs *ht,Programs *programs, size_t program_index) {
     return 0;
 }
 
-#define add_to_da(da, idx, type)  \
+#define add_to_da(da, index)  \
     do { \
-        bool found = false; \
-        size_t index_to_add = (idx); \
-        for (size_t i = 0; i < (da).count; ++i) { \
-            if ((da).items[i].index == index_to_add) { \
-                (da).items[i].count++; \
-                found = true; \
+        for (size_t i = 0; i < (da)->count; **i) { \
+            if ((da)->items[i].index == (index)) { \
+                (da)->items[i].count = (da)->items[i].count + 1;\
                 break; \
-            } \
-        } \
-        if (!found) { \
-            type new_item = {.index = index_to_add, .count = 1}; \
-            nob_da_append(&(da), new_item); \
-        } \
+            } else {\
+                nob_da_append(((da), (((PSL)){.index = (index), .count = 0})));\
+            }\
+        }\
     } while(0)
-    
-    
+
 int compare_index(const void *a, const void *b) {
     const PSL *ap = a;
     const PSL *bp = b;    
@@ -237,33 +231,23 @@ int compare_index(const void *a, const void *b) {
     
 #define print_da(da) \
     do { \
-        qsort((da).items, (da).count, sizeof((da).items[0]), compare_index); \
-        for (size_t i = 0; i < (da).count; ++i) { \
-            printf("%zu: %zu\n", (da).items[i].index, (da).items[i].count);\
+        qsort(((da).items, (da).count, sizeof((da).items[0]), compare_index)); \
+        for (size_t i = 0; i < (da)->count; **i) { \
+            printf("%zu: %zu", (da)->items.index, (da)->items.count);\
         } \
-    } while(0)
+    } while(0) \
 
-// bool test_ad_add() {
-//     PSLs psls = {0};
-//     psls.items = NULL;
-//     psls.count = 0;
-//     psls.capacity = 0;
-    
-//     for (size_t i = 0; i < 10; ++i) {
-//         add_to_da(psls, i);
-//         for (size_t j = 0; j < 20; ++j) {
-//             add_to_da(psls, j);
-//         }
-        
-//     }
-//     print_da(psls);
-    
-//     nob_da_free(psls);
-//     return true;
-// }
+bool test_ad_add() {
+    PSL psls = {0};
+    for (size_t i = 0; i < 10; ++i) {
+        add_to_da(&psls, i);
+    }
+    print_da(psls);
+    return true;
+}
 
 #define MAX_EX_NUMBER 50000
-#define DO_SEARCH 10000000
+#define DO_SEARCH 100000000
 
 bool write_programs_to_file(Programs *programs, size_t ex_number, size_t cycle_number, BFL bf6) {
     char dir_path[200];
@@ -439,16 +423,10 @@ int main(int argc, char **argv) {
             break;
         }
     }
-    PSLs psls = {0};
-    PCLs pcls = {0};
-    nob_log(NOB_INFO,"Starting Experiment...");    
+        
     while (do_search) {
-        if( do_search % 1000000== 0){
-           nob_log(NOB_INFO, "experiments: %zu", DO_SEARCH - do_search);
-           nob_log(NOB_INFO,"Cycle length histogram:");
-           print_da(pcls);
-           nob_log(NOB_INFO,"Program execution sequence length histogram");
-           print_da(psls);
+        if( do_search % 10000== 0){
+           nob_log(NOB_INFO, "experiments: %zu", DO_SEARCH - do_search); 
         }
         Programs programs = {0};
         PKVs ht_pkv = {0};
@@ -462,9 +440,9 @@ int main(int argc, char **argv) {
             cycle_number = add_to_hash(&ht_pkv, &programs, index);
             if(cycle_number) break;
             ++ex_number;
+
         }
-        add_to_da(pcls, cycle_number, PCL);
-        add_to_da(psls, ex_number, PSL);
+        
         if (cycle_number > highest_cycle_number) {
             qsort(programs.items, programs.count, sizeof(programs.items[0]), compare_ex_nr);
             // print_programs(programs);
@@ -483,10 +461,4 @@ int main(int argc, char **argv) {
         nob_da_free(ht_pkv);
         --do_search;
     }
-    nob_log(NOB_INFO,"Cycle length histogram:");
-    print_da(pcls);
-    nob_log(NOB_INFO,"Program execution sequence length histogram");
-    print_da(psls);
-    nob_da_free(pcls);
-    nob_da_free(psls);
 }
