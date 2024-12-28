@@ -570,14 +570,19 @@ Program *generate_program(Programs *prgs, size_t idx) {
 }
 
 Program *generate_random_program(Programs *prgs, size_t seq_length) {
-    SEQ s = {0};
-    generate_random_instruction_sequence(&s, seq_length);
     Program p = {0};
+    for(int i = 0; i < seq_length; i++) {
+        p.tape[i] = rand() % COUNT;
+    }
+    
+    // SEQ s = {0};
+    // generate_random_instruction_sequence(&s, seq_length);
+    
     // size_t mid_s = s.count / 2;
     // size_t corrected_mid_tape = (MAX_TAPE_SIZE / 2)-mid_s; 
-    memcpy(&p.tape, s.items, s.count * sizeof(u8));
+    // memcpy(&p.tape, s.items, s.count * sizeof(u8));
     nob_da_append(prgs, p);
-    nob_da_free(s);
+    // nob_da_free(s);
     return &prgs->items[prgs->count - 1];
 }
 
@@ -621,7 +626,7 @@ bool dump_histo_to_file(HIST *hist, size_t cutoff, size_t c, BFL bf) {
     return true;
 }
     
-#define MAX_EX_NUMBER 2000
+#define MAX_EX_NUMBER 2000000
 #define DO_SEARCH 10000000
     
     
@@ -766,7 +771,7 @@ int main(int argc, char **argv) {
             }
             Programs programs = {0};
             size_t ex_number = 0;
-            Program *p0 = generate_program(&programs, (start_idx + DO_SEARCH) - do_search);
+            Program *p0 = generate_random_program(&programs, 48); //(start_idx + DO_SEARCH) - do_search
             Program init_p = *p0;
             while (ex_number < MAX_EX_NUMBER) { 
                 p0 = evaluate(&programs, p0);
