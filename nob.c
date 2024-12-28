@@ -10,7 +10,7 @@
 #define builder_cc(cmd) \
     cmd_append(cmd, "cc")
 #define builder_flags(cmd) \
-    cmd_append(cmd, "-Wall", "-Wextra", "-Wswitch-enum", "-ggdb", "-I.")
+    cmd_append(cmd, "-Wall", "-Wextra", "-Wswitch-enum", "-ggdb", "-I." )
 #define builder_output(cmd, output_path) \
     cmd_append(cmd, "-o", output_path)
 #define builder_inputs(cmd, ...) \
@@ -31,6 +31,7 @@ int main(int argc, char **argv)
     builder_flags(&cmd);
     builder_inputs(&cmd, SRC_FOLDER"main.c");
     builder_output(&cmd, BUILD_FOLDER"detect_cycles");
+    builder_libs(&cmd);
     if (!cmd_run_sync_and_reset(&cmd)) return 1;
 
     if (argc > 0) {

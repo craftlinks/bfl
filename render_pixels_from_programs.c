@@ -111,7 +111,7 @@ bool image_from_file(const char *file) {
         content = nob_sv_trim_right(content);
 
         NSV program = nob_sv_chop_by_delim(&content, '\n');
-        if (program.count != 256) {
+        if (program.count != 64) {
             nob_log(NOB_INFO, "unexpected program size %zu, for program at line %zu", program.count, count);
             return true;
         } 
