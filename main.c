@@ -145,7 +145,7 @@ typedef struct {
 // we should allocate these da in an arena.
 typedef struct {
     Program *items;     //  array of Programs with their tape data, can be NULL 
-    size_t index;
+    bool occupied;
     size_t counter;     // cycle or sequence length
     size_t count;
     size_t capacity;
@@ -176,6 +176,12 @@ typedef struct {
                 nob_log(NOB_ERROR, "Failed to allocate new hash table!"); \
             } \
     } while(0)
+
+#define hash_reset(ht) \
+do { \
+    memset((ht)->items, 0, sizeof(*(ht)->items)*((ht)->capacity)); \
+    (ht)->count = 0; \
+} while(0)
     
 uint64_t hash(u8 *buf, size_t buf_size) {
     u64 hash = 5381;
@@ -227,64 +233,25 @@ size_t add_to_hash(PKVs *ht,Programs *programs, size_t program_index) {
 
 #define add_to_hist(da, idx, cutoff, prog)  \
     do { \
-        bool found = false; \
         size_t index_to_add = (idx); \
-        for (size_t i = 0; i < (da)->count; ++i) { \
-            if ((da)->items[i].index == index_to_add) { \
-                (da)->items[i].counter++; \
-                if (index_to_add >= cutoff) { \
-                    Program newProg = {0}; \
-                    memcpy(newProg.tape, prog.tape, MAX_TAPE_SIZE * sizeof(u8)); \
-                    nob_da_append((&(da)->items[i]), newProg); \
-                } \
-                found = true; \
-                break; \
-            } \
+        (da)->items[idx].occupied = true; \
+        (da)->items[idx].counter++; \
+        if (index_to_add >= cutoff) { \
+            Program newProg = {0}; \
+            memcpy(newProg.tape, prog.tape, MAX_TAPE_SIZE * sizeof(u8)); \
+            nob_da_append((&(da)->items[idx]), newProg); \
         } \
-        if (!found) { \
-            HIST_DATA new_item = {.items = NULL, .index = index_to_add, .counter = 1}; \
-            if (index_to_add >= cutoff) { \
-                Program newProg = {0}; \
-                memcpy(newProg.tape, prog.tape, MAX_TAPE_SIZE * sizeof(u8)); \
-                nob_da_append((&new_item), newProg); \
-            } \
-            nob_da_append((da), new_item); \
-        } \
+        break; \
     } while(0)
-    
-    
-int compare_index(const void *a, const void *b) {
-    const  HIST_DATA *ap = a;
-    const  HIST_DATA *bp = b;    
-    return (int)ap->index - (int)bp->index;
-}
     
 #define print_histo(da) \
     do { \
-        qsort((da).items, (da).count, sizeof((da).items[0]), compare_index); \
-        for (size_t i = 0; i < (da).count; ++i) { \
-            printf("%zu: %zu\n", (da).items[i].index, (da).items[i].counter);\
+        for (size_t i = 1; i < (da).capacity; ++i) { \
+            if ((da).items[i].occupied == true) { \
+                printf("%zu: %zu\n", i, (da).items[i].counter);\
+            }    \
         } \
     } while(0)
-
-// bool test_ad_add() {
-//     PSLs psls = {0};
-//     psls.items = NULL;
-//     psls.count = 0;
-//     psls.capacity = 0;
-    
-//     for (size_t i = 0; i < 10; ++i) {
-//         add_to_da(psls, i);
-//         for (size_t j = 0; j < 20; ++j) {
-//             add_to_da(psls, j);
-//         }
-        
-//     }
-//     print_da(psls);
-    
-//     nob_da_free(psls);
-//     return true;
-// }
 
 bool write_programs_to_file(Programs *programs, size_t ex_number, size_t cycle_number, BFL bf) {
     char dir_path[200];
@@ -622,8 +589,8 @@ bool dump_histo_to_file(HIST *hist, size_t cutoff, size_t c, BFL bf) {
         return false;
     }
     
-    for (size_t i = 0; i < hist->count; ++i) { // iterate over the buckets
-        if((hist->items[i].index >= cutoff) && (hist->items[i].counter >= c)) {
+    for (size_t i = cutoff; i < hist->capacity; ++i) { // iterate over the buckets
+        if((hist->items[i].occupied) && (hist->items[i].counter >= c)) {
             
             char file_path[100];
             FILE *file = NULL;
@@ -631,7 +598,7 @@ bool dump_histo_to_file(HIST *hist, size_t cutoff, size_t c, BFL bf) {
             const char *hist_type = hist->as == PCL ? "cycle" : "seq"; 
             
             snprintf(file_path, sizeof(file_path), "%s/%s-%zu-%zu.txt",
-                    dir_path, hist_type, hist->items[i].index, hist->items[i].counter);
+                    dir_path, hist_type, i, hist->items[i].counter);
             
             file = fopen(file_path, "w");
             
@@ -654,8 +621,8 @@ bool dump_histo_to_file(HIST *hist, size_t cutoff, size_t c, BFL bf) {
     return true;
 }
     
-#define MAX_EX_NUMBER 1024
-#define DO_SEARCH 100000000
+#define MAX_EX_NUMBER 2000
+#define DO_SEARCH 10000000
     
     
 
@@ -666,10 +633,10 @@ int main(int argc, char **argv) {
     srand(time(NULL));
     size_t do_search = DO_SEARCH;
     size_t cycle_number = 0;
-    size_t highest_cycle_number = 0;
-    size_t highest_execution_number = 1;
-    size_t cutoff_cycle_length = 66;
-    size_t cutoff_sequence_length = 200;
+    size_t highest_cycle_number = 66;
+    size_t highest_execution_number = 200;
+    size_t cutoff_cycle_length = 30;
+    size_t cutoff_sequence_length = 100;
     size_t cutoff_counter = 1;
     size_t bfl = 6;
     size_t start_idx = 0;
@@ -704,11 +671,14 @@ int main(int argc, char **argv) {
         }
     }
     HIST psls = {0};
+    hash_init(&psls, MAX_EX_NUMBER);
     psls.as = PSL;
     HIST pcls = {0};
+    hash_init(&pcls, MAX_EX_NUMBER);
     pcls.as = PCL;
+    PKVs ht_pkv = {0};
+    hash_init(&ht_pkv, MAX_EX_NUMBER);
         
-    
     if (file_name != NULL) {
         nob_log(NOB_INFO, "Evaluating programs from file %s", file_name);
 
@@ -787,7 +757,7 @@ int main(int argc, char **argv) {
         nob_log(NOB_INFO,"Starting Experiment...");
         
         while (do_search) {
-            if( do_search % 100000== 0){
+            if( do_search % 500000== 0){
                nob_log(NOB_INFO,"Cycle length histogram:");
                print_histo(pcls);
                nob_log(NOB_INFO,"Program execution sequence length histogram");
@@ -795,9 +765,6 @@ int main(int argc, char **argv) {
                nob_log(NOB_INFO, "experiments: %zu", DO_SEARCH - do_search);
             }
             Programs programs = {0};
-            PKVs ht_pkv = {0};
-            hash_init(&ht_pkv, MAX_EX_NUMBER);
-            
             size_t ex_number = 0;
             Program *p0 = generate_program(&programs, (start_idx + DO_SEARCH) - do_search);
             Program init_p = *p0;
@@ -808,6 +775,7 @@ int main(int argc, char **argv) {
                 if(cycle_number) break;
                 ++ex_number;
             }
+            hash_reset(&ht_pkv);
             add_to_hist(&pcls, cycle_number, cutoff_cycle_length, &init_p);
             add_to_hist(&psls, ex_number, cutoff_sequence_length, &init_p);
             // nob_log(NOB_INFO, "p%zu: %zu-%zu", DO_SEARCH - do_search, cycle_number, ex_number);
@@ -827,7 +795,6 @@ int main(int argc, char **argv) {
                 highest_execution_number = ex_number;
             }
             nob_da_free(programs);
-            nob_da_free(ht_pkv);
             --do_search;
         }
         nob_log(NOB_INFO,"Cycle length histogram:");
@@ -838,6 +805,7 @@ int main(int argc, char **argv) {
         dump_histo_to_file(&psls, cutoff_sequence_length, cutoff_counter, bfl-1);
         nob_da_free(pcls);
         nob_da_free(psls);
+        nob_da_free(ht_pkv);
         
     }
     
